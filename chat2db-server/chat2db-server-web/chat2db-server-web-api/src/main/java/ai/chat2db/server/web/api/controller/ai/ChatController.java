@@ -293,6 +293,7 @@ public class ChatController {
         buildSseEmitter(sseEmitter, uid);
 
         OpenAIEventSourceListener openAIEventSourceListener = new OpenAIEventSourceListener(sseEmitter);
+        openAIEventSourceListener.setQueryRequest(queryRequest);
         OpenAIClient.getInstance().streamChatCompletion(messages, openAIEventSourceListener);
         LocalCache.CACHE.put(uid, JSONUtil.toJsonStr(messages), LocalCache.TIMEOUT);
         return sseEmitter;
